@@ -1,0 +1,19 @@
+.btn {
+	height: 100px;
+	width: 100px;
+	margin: 20px;
+	display: inline-block;
+}
+
+.red-btn {
+	background: red;
+}
+
+.blue-btn {
+	background: blue;
+}
+
+.big-btn {
+	width: 200px;
+	height: 200px;
+}
