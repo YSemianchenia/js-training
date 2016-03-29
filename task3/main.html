@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Task 3 - Yahor Semianchenia</title>
+	<link rel="stylesheet" type="text/css" href="styles.css"/>
+</head>
+<body>
+	<div class="tag-field">
+		<input id="input-place" type="text" placeholder="Enter text separated by semicolons"/>
+		<span id="clear-all" class="close"></span>	
+	</div>
+</body>
+</html>
+<script>
+alert(";" === ";");
+
+	document.querySelector('#clear-all').onclick = function() {
+		var tagField = this.parentElement;
+
+		var tags = document.querySelectorAll('.tag');
+		var i = 0;
+		var len = tags.length;
+		for (; i < len; i++) {
+			tagField.removeChild(tags[i]);
+		}
+	};
+
+	document.querySelector("#input-place").onkeyup = function(ev) {
+		if(isSemicolon(ev)) {
+			var value = this.value;
+			var len = value.length;
+			
+			if(len > 1)	{
+				var tagText = value.substring(0, len - 1);
+
+				var tag = document.createElement("span");
+				tag.classList.add("tag");
+				tag.textContent = tagText;
+
+				var closeBtn = document.createElement("span");
+				closeBtn.classList.add("close");
+
+				closeBtn.onclick= function(ev) {
+					var closeBtn = this;
+					var tag = closeBtn.parentNode;
+
+					var tagField = tag.parentNode;
+					tagField.removeChild(tag);
+				};
+
+				tag.appendChild(closeBtn);
+
+				var tagField = this.parentElement;
+				tagField.insertBefore(tag, this);
+			}
+
+			this.value = null;
+		}
+	};
+
+	function isSemicolon(ev) {
+		var keyCode = ev.keyCode || ev.which;
+		var symbol = String.fromCharCode(keyCode);
+		return keyCode == 186;
+	}
+</script>
