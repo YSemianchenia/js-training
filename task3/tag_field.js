@@ -1,4 +1,7 @@
 function TagField() {
+	this._tags = [];
+	this._helper = new TagFieldHelper();
+
 	this.handleTextInput = this.handleTextInput.bind(this);
 	this.removeAllTags = this.removeAllTags.bind(this);
 }
@@ -11,12 +14,14 @@ TagField.prototype._removeAllBtn;
 TagField.prototype._helper;
 
 TagField.prototype.handleTextInput = function(ev) {
-	if(!_helper.semicolonBtnPressed(ev)) {
+	var helper = this._helper;
+	
+	if(!helper.semicolonBtnPressed(ev)) {
 		return;
 	}
 
-	var tagElem = _helper.createTagElement(this._input);
-	var tagBtn = _helper.createTagRemoveBtn();
+	var tagElem = helper.createTagElement(this._input);
+	var tagBtn = helper.createTagRemoveBtn();
 	
 	if(tagElem && tagBtn){
 		this.addTag(tagElem, tagBtn);
@@ -28,10 +33,10 @@ TagField.prototype.handleTextInput = function(ev) {
 TagField.prototype.addTag = function(tagElem, tagBtn) {
 	this._element.insertBefore(tagElem, this._input);
 
-		var tag = new Tag(this);
-		tag.attach(tagElem, tagBtn);
-		
-		this._tags.push(tag);
+	var tag = new Tag(this);
+	tag.attach(tagElem, tagBtn);
+	
+	this._tags.push(tag);
 };
 
 TagField.prototype.removeTag = function(tag) {
@@ -67,9 +72,6 @@ TagField.prototype.attach = function(element, input, removeBtn) {
 	this._input = input;
 	this._removeAllBtn = removeBtn;
 	
-	this._tags = [];
-	_helper = new TagFieldHelper();
-
 	this._input.addEventListener('keyup', this.handleTextInput);
 	this._removeAllBtn.addEventListener('click', this.removeAllTags);
 };
@@ -81,5 +83,4 @@ TagField.prototype.detach = function(ev) {
 	this._removeAllBtn = null;
 	this._input = null;
 	this._element = null;
-	this._tags = null;
 };
